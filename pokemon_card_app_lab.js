@@ -68,6 +68,7 @@ const game = {
 		 //.splice will return an array and we want the value, not the array. .splice is = this.library.splice(draw, 1) is essentially replaced with the array it is splicing (card 1,2,3,). Use bracket [0] because we want the value, from the returned array
 		player.playerHand.push(randomCard);
 		this.playedCards.push(randomCard);
+		console.log("dealing player")
 		}
 	},
 	dealComputer(){
@@ -77,6 +78,7 @@ const game = {
 		randomCard = this.library.splice(draw, 1)[0];
 		computer.computerHand.push(randomCard);
 		this.playedCards.push(randomCard);
+		console.log("dealing computer")
 		}
 	},
 	totalCardsLeft(){
@@ -86,16 +88,21 @@ const game = {
 	dealCards(){
 		this.dealPlayer();
 		console.log(player.playerHand[0])
-			console.log(computer.computerHand[0])
+		
 		this.dealComputer();
+		console.log(computer.computerHand[0])
 	},
 
 	// need to add player.playerCard();
-	
-	playRound(){
-		this.dealCards();
 
+
+	playRound(){
+		console.log("beginning round!")
+		this.dealCards();
 		for(let i = 0; i < 3; i ++){
+			console.log(`beginning ${i+1}!`)
+			player.playerCardSelect();
+			computer.computerCardSelect()
 			this.battle();
 			console.log(`End of fight ${i+1}!`)
 		}
@@ -106,12 +113,12 @@ const game = {
 	// 	i = Math.floor(Math.random() * 3);
 	// 	computerCard = this.cards[i];
 	// 	},
-	battle(){
+	battle(cardSelection){
 
 		if(player.playersCard.damage > computer.computersCard.damage){
 			player.playersCurrentScore ++;
 			console.log('player wins this fight!')
-		}else if(player.playersCard.damage > computer.computersCard.damage){
+		}else if(player.playersCard.damage < computer.computersCard.damage){
 			computer.computersCurrentScore ++;
 			console.log('computer won this fight!')
 		}else{
